@@ -20,6 +20,6 @@ from products.views import main_view, products_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', main_view),
+    path('', main_view),
     path('products/', products_view)
 ]

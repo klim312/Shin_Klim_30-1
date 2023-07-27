@@ -1,6 +1,17 @@
 {% extends 'layouts/index.html'%}
 
 {% block content %}
+    <style type="text/css">
+        .products {
+            display:  flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-left:10%;
+            padding: 10px
+        }
+
+    </style>
+
     <div class="products">
        {% for products in products %}
             <h1>{{ products.title }}</h1>
