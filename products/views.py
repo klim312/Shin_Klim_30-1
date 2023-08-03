@@ -1,5 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
+
+from products.constants import PAGINATION_LIMIT
 from products.models import Products, Category, Comment
 from products.forms import Category_create, Products_create, CommentsCreateForm
 
@@ -11,9 +13,24 @@ def main_view(request):
 
 def products_view(request):
     if request.method == 'GET':
-        products = Products.objects.all()
+
+        shops = Products.objects.all()
+        search_text = request.GET.get("search")
+        page = int(request.GET.get('page', 1))
+        if search_text:
+            shops = shops.filter(Q(title__icontains=search_text) |
+                                 Q(description__icontains=search_text)
+                                 )
+
+        max_page = shops.__len__() / PAGINATION_LIMIT
+        max_page = round(max_page) + 1 if round(max_page) < max_page else round(max_page)
+
+        shops = shops[PAGINATION_LIMIT * (page - 1):PAGINATION_LIMIT * page]
+
         context_data = {
-            'products': products
+            'shops': shops,
+            'user': request.user,
+            'pages': range(1, max_page + 1)
         }
         return render(request, 'products/products.html', context=context_data)
 
