@@ -34,3 +34,8 @@ def login_view(request):
             if user:
                 login(request=request, user=user)
                 return redirect('/products/')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/products/')
