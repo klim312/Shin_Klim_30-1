@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, HttpResponse, redirect
 
 from products.constants import PAGINATION_LIMIT
 from products.models import Products, Category, Comment
